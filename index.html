@@ -2,101 +2,144 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <title>Flame Wizard Bot</title>
 <script src="https://telegram.org/js/telegram-web-app.js"></script>
-<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;800&display=swap" rel="stylesheet">
 <style>
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@700;900&display=swap');
 *{margin:0;padding:0;box-sizing:border-box}
-body{background:#080c18 url('https://images.unsplash.com/photo-1535905557558-afc4877a26fc?q=80&w=900') center/cover fixed;font-family:'Cinzel',serif;color:#e6dcc3;min-height:100vh}
-body::before{content:'';position:fixed;inset:0;background:rgba(5,10,20,0.82);z-index:-1}
-.app{max-width:480px;margin:0 auto;padding:10px}
-.top-bar{background:linear-gradient(#3a404c,#22262e);border:2px solid #c89b3c;border-radius:6px;padding:8px;display:flex;gap:6px;align-items:center}
-.balance-box{display:flex;gap:6px;background:rgba(0,0,0,0.5);border:1px solid #5a4a20;padding:6px 10px;border-radius:4px}
-.balance-box span{font-size:22px;color:#f5d78e;font-weight:800}
-.mbtns{flex:1;display:flex;gap:5px}
-.mbtn{flex:1;background:#2e323a;border:1px solid #7a6a40;border-radius:6px;padding:6px 2px;text-align:center;font-size:9px;color:#d5c9a8;cursor:pointer}
-.mbtn.active{border-color:#f5d78e;color:#f5d78e;background:#3a2e1a}
-.mbtn i{display:block;font-size:18px;font-style:normal}
-.daily-box{margin:12px 0;width:fit-content;background:#22262e;border:2px solid #4a5a6a;padding:8px 16px;border-radius:4px}
-.daily-box b{color:#d4e88a;font-size:18px}
-.sec-title{background:linear-gradient(90deg,transparent,#2a3442,#2a3442,transparent);border:1px solid #3a4a5a;border-left:4px solid #c89b3c;border-right:4px solid #c89b3c;text-align:center;padding:10px;margin:14px 0 10px;color:#a8d8ff}
-.grid2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-.w-card{background:linear-gradient(#2e3440,#1a1e26);border:2px solid #4a5568;border-radius:8px;overflow:hidden;position:relative}
-.w-card.img{height:128px;background:#0e121a}.w-card.img img{width:100%;height:100%;object-fit:cover}
-.w-card.info{padding:7px;text-align:center;background:#1e242f}.name{font-size:11px;font-weight:800}.lvl{font-size:10px;color:#7ec8ff}
-.shop-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
-.s-card{background:#1a1e26;border:1.5px solid #5a5a6a;border-radius:6px;overflow:hidden;text-align:center}
-.s-card.s-img{height:84px}.s-card.s-img img{width:100%;height:100%;object-fit:cover}
-.s-name{font-size:7.5px;font-weight:800;padding:4px 2px;color:#e8e0c0;height:22px}
-.s-owned{font-size:7px;color:#9ab}.s-inc{font-size:6px;color:#8ec8ff;background:rgba(0,20,40,0.6);margin:2px;padding:2px}
-.hire{margin:4px;background:linear-gradient(#4a3a1a,#2a1e0a);border:1px solid #8a6d2b;border-radius:4px;padding:3px 0;font-size:8px;color:#f5d78e;font-weight:800;cursor:pointer}
-.magic-banner{margin-top:14px;background:#2a2e35;border:2px solid #6b5a2e;border-radius:8px;padding:12px;text-align:center;color:#f5d78e;font-weight:800}
-.modal{position:fixed;inset:0;background:rgba(0,0,0,0.85);z-index:99;display:none;place-items:center;padding:20px}.modal.show{display:grid}
-.mbox{background:#1a1e26;border:2px solid #c89b3c;border-radius:10px;padding:20px;max-width:340px;width:100%;text-align:center}
-.mbox h3{color:#f5d78e;margin-bottom:10px}.mbox p{font-size:13px;color:#c0b090;margin-bottom:14px;line-height:1.5}
-.btn{width:100%;padding:10px;background:#c89b3c;border:none;border-radius:6px;font-weight:800}
+body{background:#0a0f1e;font-family:'Cinzel',serif;color:#e8dcc0;min-height:100vh}
+body::before{content:'';position:fixed;inset:0;background:
+radial-gradient(ellipse at top,#1a2a4a 0%,#0a0f1e 60%),
+url('https://i.ibb.co/6y8j7pF/library.jpg');background-size:cover;opacity:0.3;z-index:-1}
+.app{max-width:440px;margin:0 auto;padding:8px 8px 40px}
+
+/* TOP - screenshot 2 er moto */
+.top{
+background:linear-gradient(180deg,#3d4453 0%,#1f242f 100%);
+border:2px solid #8c6a22; border-radius:8px; padding:7px;
+display:flex; gap:6px; align-items:center; box-shadow:0 0 0 2px #000, 0 5px 15px #000;
+}
+.balBox{display:flex;align-items:center;gap:5px;background:#11141b;border:1px solid #5a4a20;padding:5px 9px;border-radius:6px;min-width:88px}
+.balBox b{font-size:8px;color:#a99a7a;display:block}.balBox span{font-size:20px;color:#ffd36a;font-weight:900}
+.tbtns{flex:1;display:flex;gap:4px}
+.tbtn{flex:1;background:linear-gradient(180deg,#4b4f5c,#2a2e38);border:1px solid #8a7a52;border-radius:7px;padding:5px 1px;text-align:center;font-size:8px;color:#d8ccaa}
+.tbtn.on{background:linear-gradient(180deg,#5a4520,#2f2410);border-color:#ffd36a;color:#ffd36a;box-shadow:0 0 8px rgba(255,211,106,0.4)}
+
+/* daily */
+.daily{margin:10px 0 0;display:inline-block;background:linear-gradient(#2a3444,#1c242f);border:1.5px solid #3a5a7a;border-radius:6px;padding:7px 14px;box-shadow:0 3px 10px #000}
+.daily small{font-size:9px;color:#9ab}.daily b{font-size:14px;color:#d8f08a}
+
+/* title bar */
+.titleBar{
+margin:14px 0 8px;background:linear-gradient(90deg,#0f1a2a 0%,#25344a 50%,#0f1a2a 100%);
+border:1px solid #3a506a;border-left:3px solid #c89b3c;border-right:3px solid #c89b3c;
+padding:9px;text-align:center;color:#8ec8ff;font-size:12px;letter-spacing:1px;position:relative
+}
+.titleBar::before,.titleBar::after{content:'✦';position:absolute;top:50%;transform:translateY(-50%);color:#5ec8ff;font-size:12px}
+.titleBar::before{left:8px}.titleBar::after{right:8px}
+
+/* cards */
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.card{
+background:linear-gradient(180deg,#2c3240 0%,#161a22 100%);border:2px solid #4a5568;border-radius:10px;
+overflow:hidden;position:relative;box-shadow:0 0 0 1px #000, 0 6px 18px rgba(0,0,0,0.8);aspect-ratio:3/4
+}
+.cardImg{position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,0) 40%,rgba(0,0,0,0.9) 85%)}
+.cardImg div{width:100%;height:100%}
+.f1{background:linear-gradient(180deg,#3a4a5a,#1a2a3a)} .f2{background:linear-gradient(180deg,#5a3a2a,#2a1a1a)}
+.f3{background:linear-gradient(180deg,#2a4a2a,#0a1a0a)} .f4{background:linear-gradient(180deg,#4a4a6a,#1a1a2a)}
+.cardBottom{position:absolute;bottom:0;left:0;right:0;padding:8px 8px 7px;background:linear-gradient(180deg,rgba(20,25,35,0.1),rgba(15,18,28,0.95));text-align:left}
+.cardBottom .n{font-size:11px;font-weight:900;color:#fff;text-shadow:0 1px 3px #000}
+.cardBottom .l{font-size:9px;color:#7ec8ff;margin-top:1px}.cardBottom .s{font-size:9px;color:#ffd36a}
+
+/* shop */
+.g3{display:grid;grid-template-columns:repeat(3,1fr);gap:7px}
+.scard{
+background:linear-gradient(180deg,#2f3442,#1a1e28);border:1.5px solid #5a5a6a;border-radius:8px;
+overflow:hidden;text-align:center;position:relative;box-shadow:0 3px 10px #000
+}
+.sTop{height:82px;position:relative;display:grid;place-items:center;font-size:32px}
+.sTop::after{content:'';position:absolute;inset:0;background:linear-gradient(0deg,rgba(0,0,0,0.6),transparent)}
+.sBadge{position:absolute;top:4px;left:50%;transform:translateX(-50%);width:28px;height:28px;background:radial-gradient(circle,#4a4a5a,#1a1a22);border:1px solid #c89b3c;border-radius:50%;display:grid;place-items:center;font-size:14px;z-index:2}
+.sName{font-size:7px;font-weight:900;color:#e8dcc0;padding:5px 2px 1px;line-height:1.1;height:18px}
+.sOwn{font-size:7px;color:#8aa}.sInc{font-size:6px;color:#7ec8ff;background:#0e1a2a;margin:2px 3px;padding:2px;border-radius:3px}
+.hire{margin:4px 4px 5px;background:linear-gradient(180deg,#8a6a22,#4a3710);border:1px solid #c89b3c;border-radius:5px;padding:4px 0;font-size:8px;font-weight:900;color:#000;cursor:pointer}
+
+/* modal */
+.modal{position:fixed;inset:0;background:rgba(0,0,0,0.85);z-index:99;display:none;place-items:center;padding:20px}
+.modal.show{display:grid}
+.box{background:#1e242f;border:2px solid #c89b3c;border-radius:12px;padding:18px;width:100%;max-width:320px;text-align:center}
+.box h3{color:#ffd36a;margin-bottom:8px}.box p{font-size:12px;color:#b0a080;line-height:1.5;margin-bottom:12px}
+.box button{width:100%;padding:10px;background:linear-gradient(#c89b3c,#8a6a22);border:none;border-radius:7px;font-weight:900}
 </style>
 </head>
 <body>
 <div class="app">
-<div class="top-bar">
-<div class="balance-box"><div>🔥</div><div><small style="font-size:10px;color:#a99a7a">My Balance</small><br><span id="bal">226</span></div></div>
-<div class="mbtns">
-<div class="mbtn active"><i>🧙‍♂️</i>Magician</div>
-<div class="mbtn" onclick="openModal('dep')"><i>📥</i>Deposit</div>
-<div class="mbtn" onclick="openModal('wd')"><i>📤</i>Withdraw</div>
-<div class="mbtn"><i>👥</i>Partners</div>
+<div class="top">
+<div class="balBox"><div style="font-size:22px">🔥</div><div><b>My Balance</b><span id="b">226</span></div></div>
+<div class="tbtns">
+<div class="tbtn on">🧙‍♂️<br>Magician</div>
+<div class="tbtn" onclick="openM('dep')">📥<br>Deposit</div>
+<div class="tbtn" onclick="openM('wd')">📤<br>Withdraw</div>
+<div class="tbtn">👥<br>Partners</div>
 </div>
 </div>
 
-<div class="daily-box"><small>☀️ Daily Income</small><br><b>+<span id="daily">42</span> / day</b></div>
+<div class="daily"><small>☀ Daily Income</small><br><b>+<span id="d">42</span> / day</b></div>
 
-<div class="sec-title">Wizard Collection</div>
-<div class="grid2" id="col"></div>
-
-<div class="sec-title">WIZARD SHOP • Hire Wizards • Daily +20%</div>
-<div style="background:rgba(0,20,60,0.4);border:1px solid #2a4a6a;padding:6px;text-align:center;font-size:9px;color:#8ec8ff;margin-bottom:8px">Daily Income Bonus: +20% per owned Wizard • Income updates every 24h<br>Resets in: <span id="tm">06:42:19</span></div>
-<div class="shop-grid" id="shop"></div>
-
-<div class="magic-banner">📖 Magic Books Shop</div>
+<div class="titleBar">Wizard Collection</div>
+<div class="g2">
+<div class="card"><div class="cardImg"><div class="f1"></div></div><div class="cardBottom"><div class="n">FROST SAGE</div><div class="l">Lv.12</div><div class="s">★★★★☆</div></div></div>
+<div class="card"><div class="cardImg"><div class="f2"></div></div><div class="cardBottom"><div class="n">FIRE ARCANIST</div><div class="l">Lv.9</div><div class="s">★★★★☆</div></div></div>
+<div class="card"><div class="cardImg"><div class="f3"></div></div><div class="cardBottom"><div class="n">DRUID KEEPER</div><div class="l">Lv.7</div><div class="s">★★★★☆</div></div></div>
+<div class="card"><div class="cardImg"><div class="f4"></div></div><div class="cardBottom"><div class="n">SHADOW MAGE</div><div class="l">Lv.5</div><div class="s">★★★★★</div></div></div>
 </div>
 
-<div class="modal" id="depM"><div class="mbox"><h3>📥 Deposit</h3><p>Deposit system পরে বসানো হবে।<br><br>এখানে TON / USDT Address এবং QR Code বসবে।<br>Admin খুব শীঘ্রই Enable করবে।</p><button class="btn" onclick="closeM()">OK</button></div></div>
-<div class="modal" id="wdM"><div class="mbox"><h3>📤 Withdraw</h3><p>Withdraw system পরে বসানো হবে।<br><br>Minimum: 100 Flame<br>Admin খুব শীঘ্রই Enable করবে।</p><button class="btn" onclick="closeM()">OK</button></div></div>
+<div class="titleBar">WIZARD SHOP • Hire Wizards • Daily Income +20%</div>
+<div style="background:#102040;border:1px solid #2a4a6a;color:#7ec8ff;font-size:8px;text-align:center;padding:5px;border-radius:5px;margin-bottom:6px">Daily Income Bonus: +20% per owned Wizard • Resets in: <span id="tm">06:42:19</span></div>
+<div class="g3" id="shop"></div>
+
+<div class="titleBar" style="margin-top:14px;color:#ffd36a;cursor:pointer">📖 Magic Books Shop</div>
+</div>
+
+<div class="modal" id="depM"><div class="box"><h3>📥 Deposit</h3><p>Deposit Option রাখা হয়েছে।<br><br>কিভাবে Deposit করবে সেটা পরে বসানো হবে।<br>এখানে পরে TON Wallet Address / QR আসবে।</p><button onclick="closeM()">OK</button></div></div>
+<div class="modal" id="wdM"><div class="box"><h3>📤 Withdraw</h3><p>Withdraw Option রাখা হয়েছে।<br><br>কিভাবে টাকা তুলবে সেটা পরে বসানো হবে।<br>Minimum Withdraw পরে জানানো হবে।</p><button onclick="closeM()">OK</button></div></div>
 
 <script>
 let bal=226;
-let shop=[
-{name:'FLAME WIZARD',own:5,price:120,img:'https://images.unsplash.com/photo-1577493340887-b7bfff550145?q=80&w=300'},
-{name:'FROST MAGE',own:2,price:150,img:'https://images.unsplash.com/photo-1518709268805-4e9042af9f23?q=80&w=300'},
-{name:'ARCANE SCHOLAR',own:8,price:130,img:'https://images.unsplash.com/photo-1535666669445-7495384c8ed8?q=80&w=300'},
-{name:'STORM CALLER',own:3,price:200,img:'https://images.unsplash.com/photo-1518709268805-4e9042af9f23?q=80&w=300'},
-{name:'NATURE DRUID',own:4,price:130,img:'https://images.unsplash.com/photo-1448375240586-882707db888b?q=80&w=300'},
-{name:'SHADOW ADEPT',own:1,price:250,img:'https://images.unsplash.com/photo-1518709268805-4e9042af9f23?q=80&w=300'},
-{name:'PYRO SAGE',own:0,price:120,img:'https://images.unsplash.com/photo-1577493340887-b7bfff550145?q=80&w=300'},
-{name:'ICE ENCHANTER',own:2,price:160,img:'https://images.unsplash.com/photo-1518709268805-4e9042af9f23?q=80&w=300'},
-{name:'LIGHT CLERIC',own:6,price:140,img:'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=300'},
-{name:'DARK WARLOCK',own:1,price:300,img:'https://images.unsplash.com/photo-1518709268805-4e9042af9f23?q=80&w=300'},
-{name:'EARTH GOLEM',own:3,price:170,img:'https://images.unsplash.com/photo-1518709268805-4e9042af9f23?q=80&w=300'},
-{name:'CELESTIAL MAGE',own:0,price:220,img:'https://images.unsplash.com/photo-1531306728370-e2ebd9d7bb99?q=80&w=300'},
-];
-let coll=[
-{name:'Frost Sage',lv:12,st:4,img:'https://images.unsplash.com/photo-1518709268805-4e9042af9f23?q=80&w=400'},
-{name:'Fire Arcanist',lv:9,st:4,img:'https://images.unsplash.com/photo-1577493340887-b7bfff550145?q=80&w=400'},
-{name:'Druid Keeper',lv:7,st:4,img:'https://images.unsplash.com/photo-1448375240586-882707db888b?q=80&w=400'},
-{name:'Shadow Mage',lv:5,st:5,img:'https://images.unsplash.com/photo-1518709268805-4e9042af9f23?q=80&w=400'},
+let wiz=[
+{name:'FLAME WIZARD',own:5,price:120,emoji:'🧙‍♂️',c:'#5a2a1a'},
+{name:'FROST MAGE',own:2,price:150,emoji:'🧝',c:'#1a3a5a'},
+{name:'ARCANE SCHOLAR',own:8,price:130,emoji:'🔮',c:'#3a2a5a'},
+{name:'STORM CALLER',own:3,price:200,emoji:'⛈️',c:'#2a3a4a'},
+{name:'NATURE DRUID',own:4,price:130,emoji:'🌿',c:'#1a3a1a'},
+{name:'SHADOW ADEPT',own:1,price:250,emoji:'🌑',c:'#2a2a3a'},
+{name:'PYRO SAGE',own:0,price:120,emoji:'🔥',c:'#5a1a0a'},
+{name:'ICE ENCHANTER',own:2,price:160,emoji:'❄️',c:'#1a4a5a'},
+{name:'LIGHT CLERIC',own:6,price:140,emoji:'✨',c:'#4a4a2a'},
+{name:'DARK WARLOCK',own:1,price:300,emoji:'💀',c:'#1a0a1a'},
+{name:'EARTH GOLEM',own:3,price:170,emoji:'🪨',c:'#3a2a0a'},
+{name:'CELESTIAL MAGE',own:0,price:220,emoji:'🌙',c:'#2a2a4a'},
 ];
 function render(){
-document.getElementById('bal').innerText=bal;
-let inc=0;shop.forEach(w=>inc+=w.own*w.price*0.2);document.getElementById('daily').innerText=Math.floor(inc)||42;
-document.getElementById('col').innerHTML=coll.map(c=>`<div class="w-card"><div class="img"><img src="${c.img}"></div><div class="info"><div class="name">${c.name}</div><div class="lvl">Lv.${c.lv}</div><div style="font-size:8px;color:#f5d78e">${'★'.repeat(c.st)}${'☆'.repeat(5-c.st)}</div></div></div>`).join('');
-document.getElementById('shop').innerHTML=shop.map((w,i)=>`<div class="s-card"><div class="s-img"><img src="${w.img}"></div><div class="s-name">${w.name}</div><div class="s-owned">Owned: ${w.own}</div><div class="s-inc">Daily Income: +20%</div><div class="hire" onclick="hire(${i})">🔥 HIRE ${w.price}</div></div>`).join('');
+document.getElementById('b').innerText=bal;
+let inc=0;wiz.forEach(w=>inc+=w.own*w.price*0.2);
+document.getElementById('d').innerText=Math.floor(inc)||42;
+document.getElementById('shop').innerHTML=wiz.map((w,i)=>`
+<div class="scard">
+<div class="sTop" style="background:${w.c}"><div class="sBadge">${w.emoji}</div><div>${w.emoji}</div></div>
+<div class="sName">${w.name}</div>
+<div class="sOwn">Owned: ${w.own}</div>
+<div class="sInc">Daily Income: +20%</div>
+<div class="hire" onclick="hire(${i})">🔥 HIRE ${w.price}</div>
+</div>`).join('');
 }
-function hire(i){if(bal<shop[i].price){alert('Balance কম!');return;}bal-=shop[i].price;shop[i].own++;render();if(window.Telegram)Telegram.WebApp.HapticFeedback.notificationOccurred('success');}
-function openModal(t){document.getElementById(t=='dep'?'depM':'wdM').classList.add('show')}
+function hire(i){if(bal<wiz[i].price){alert('Balance কম! Deposit করো');return;}bal-=wiz[i].price;wiz[i].own++;render();try{Telegram.WebApp.HapticFeedback.notificationOccurred('success')}catch(e){}}
+function openM(t){document.getElementById(t=='dep'?'depM':'wdM').classList.add('show')}
 function closeM(){document.querySelectorAll('.modal').forEach(m=>m.classList.remove('show'))}
-render(); setInterval(()=>{let e=document.getElementById('tm');let p=e.innerText.split(':').map(Number);let s=p[0]*3600+p[1]*60+p[2]-1;if(s<0)s=86400;e.innerText=`${String(Math.floor(s/3600)).padStart(2,'0')}:${String(Math.floor(s%3600/60)).padStart(2,'0')}:${String(s%60).padStart(2,'0')}`},1000);
+render();
+setInterval(()=>{let e=document.getElementById('tm');let p=e.innerText.split(':').map(Number);let s=p[0]*3600+p[1]*60+p[2]-1;if(s<0)s=86400;e.innerText=`${String(Math.floor(s/3600)).padStart(2,'0')}:${String(Math.floor(s%3600/60)).padStart(2,'0')}:${String(s%60).padStart(2,'0')}`},1000);
 Telegram.WebApp.ready();Telegram.WebApp.expand();
 </script>
 </body>
