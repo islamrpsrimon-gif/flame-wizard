@@ -2,91 +2,86 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
 <title>FlyMage</title>
 <script src="https://telegram.org/js/telegram-web-app.js"></script>
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@700;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@700;800;900&display=swap');
 *{margin:0;padding:0;box-sizing:border-box}
-body{background:#0f0f12;font-family:'Nunito',sans-serif}
-.app{max-width:420px;margin:0 auto;min-height:100vh;background:linear-gradient(180deg,#2a2a35 0%,#15151a 100%);padding:10px;position:relative;overflow:hidden}
-.app::before{content:'';position:absolute;inset:0;background:url('https://i.imgur.com/8Km9tLL.jpg') center/cover;opacity:0.25;z-index:0}
-.app>*{position:relative;z-index:1}
+body{background:#0c0c0f;font-family:'Nunito',sans-serif}
+.app{max-width:420px;margin:0 auto;min-height:100vh;background:#0e12;position:relative;overflow:hidden;padding:10px 10px 20px}
+.bg{position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,0.2),rgba(0,0,0,0.85)), url('https://i.imgur.com/8Km9tLL.jpg');background-size:cover;background-position:center;opacity:0.9}
+.content{position:relative;z-index:2}
 
-/* Stone Style - exact like FlyMage */
+/* Stone Tablet */
 .stone{
-background:linear-gradient(180deg,#e6ddd0 0%,#c9bfae 100%);
-border:2px solid #7a7268; border-radius:14px;
-box-shadow:inset 0 2px 0 #fff, inset 0 -1px 0 #0003, 0 2px 6px #0008;
-color:#2b2b2b; font-weight:900;
-position:relative;
+background:linear-gradient(180deg,#d9d0c1 0%,#b9ad9a 100%);
+border-radius:14px; border:2px solid #6e665c;
+box-shadow:inset 0 2px 0 #fff9, inset 0 -2px 2px #0003, 0 3px 8px #000a, 0 0 0 1.5px #000;
+position:relative; color:#1e1e1e; font-weight:900;
 }
-.stone::after{
-content:'';position:absolute;inset:0;border-radius:12px;
-background:linear-gradient(105deg,transparent 40%,rgba(255,255,255,0.4) 50%,transparent 60%);
-pointer-events:none;
-}
+.stone::before{content:'';position:absolute;left:6px;right:6px;top:4px;height:2px;background:linear-gradient(90deg,transparent,rgba(255,255,255,0.6),transparent);border-radius:10px}
 
-.topRow{display:flex;gap:8px;margin-bottom:10px;align-items:center}
-.balBox{flex:1;padding:8px 12px;display:flex;flex-direction:column;align-items:center;line-height:1.1}
-.balBox small{font-size:11px;font-weight:700;opacity:0.7}
-.balBox div{font-size:22px;display:flex;gap:5px;align-items:center}
-.rmBox{width:62px;height:62px;border-radius:50%;background:#2ec4b6;border:3px solid #0a3a38;display:grid;place-items:center;color:#fff;font-size:20px;box-shadow:0 4px 10px #000}
-.profBox{flex:0.7;padding:14px;text-align:center;font-size:14px}
+.top{display:flex;gap:8px;align-items:center;margin-bottom:10px}
+.myBal{flex:1;padding:7px 10px;text-align:center;line-height:1.1}
+.myBal small{font-size:11px;font-weight:700;opacity:0.7;display:block}
+.myBal div{font-size:20px;display:flex;align-items:center;justify-content:center;gap:5px}
+.rm{width:58px;height:58px;border-radius:50%;background:#2ec4b6;border:3px solid #0f3d3a;display:grid;place-items:center;color:#fff;font-size:20px;font-weight:900;flex-shrink:0;box-shadow:0 4px 10px #000}
+.prof{width:95px;padding:13px 0;text-align:center;font-size:14px}
 
 .menu{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin-bottom:14px}
-.menu div{padding:12px 2px;text-align:center;font-size:12px;font-weight:800}
+.menu div{padding:11px 0;text-align:center;font-size:12px;font-weight:800;cursor:pointer}
 
-.daily{color:#fff;margin-bottom:10px}
-.daily .t{display:flex;justify-content:space-between;font-size:13px;margin-bottom:5px}
-.bar{height:6px;background:#ffffff30;border-radius:10px;overflow:hidden}
-.fill{height:100%;background:#fff;width:40%;border-radius:10px}
+.dailyRow{color:#fff;font-size:13px;margin-bottom:10px}
+.dailyTop{display:flex;justify-content:space-between;margin-bottom:5px}
+.bar{height:5px;background:#ffffff30;border-radius:10px;overflow:hidden}
+.fill{height:100%;background:#cfcfcf;border-radius:10px}
 
-.main{display:grid;grid-template-columns:115px 1fr;gap:10px;margin-bottom:12px}
+.main{display:grid;grid-template-columns:122px 1fr;gap:10px}
 
-.big{
-background:linear-gradient(180deg,#e6ddd0,#c2b7a6);border-radius:18px;border:2px solid #7a7268;
-padding:10px;text-align:center;box-shadow:inset 0 2px 0 #fff,0 6px 15px #000;
-display:flex;flex-direction:column;align-items:center;
+.bigStone{
+background:linear-gradient(180deg,#d9d0c1,#b9ad9a);border-radius:20px;border:2.5px solid #6e665c;
+padding:10px 8px 12px;box-shadow:inset 0 2px 0 #fff,0 6px 18px #000,0 0 0 1.5px #000;
+display:flex;flex-direction:column;align-items:center;position:relative;
 }
-.big .wiz{font-size:70px;margin:2px 0 4px;filter:drop-shadow(0 4px 6px #0004)}
-.lvl{background:linear-gradient(#d6cdc0,#b5aa9a);border:2px solid #7a7268;border-radius:14px;padding:6px 18px;font-size:20px;font-weight:900;margin:4px 0;min-width:70px}
-.earn{font-size:17px;font-weight:900;margin:8px 0;display:flex;gap:4px;align-items:center}
-.collect{
-width:100%;padding:12px;background:linear-gradient(180deg,#d8c8d2,#b9a9b3);
-border:2px solid #8a7a82;border-radius:18px;font-weight:900;font-size:14px;letter-spacing:0.5px;
-box-shadow:inset 0 1px 0 #fff,0 3px 6px #0005;cursor:pointer
-}
+.bigStone::before{content:'';position:absolute;inset:0;border-radius:18px;background:linear-gradient(180deg,rgba(255,255,255,0.25),transparent 30%);pointer-events:none}
+.wizBig{width:90px;height:110px;background:radial-gradient(ellipse at center,#aab8c8,#6a7a8a);border-radius:12px;display:grid;place-items:center;font-size:62px;box-shadow:inset 0 0 20px #0005;margin-bottom:6px}
+.lvlStone{background:linear-gradient(180deg,#d0c5b3,#a99d8a);border:2px solid #6e665c;border-radius:12px;padding:5px 18px;font-size:18px;font-weight:900;margin:4px 0;min-width:66px;text-align:center;box-shadow:0 2px 4px #0005}
+.earnStone{font-size:16px;font-weight:900;margin:8px 0;display:flex;align-items:center;gap:4px}
+.collectBtn{width:92%;padding:11px 0;background:linear-gradient(180deg,#cbbcc5,#a99aa3);border:2px solid #7a6e78;border-radius:18px;font-weight:900;font-size:14px;letter-spacing:1px;box-shadow:inset 0 1px 0 #fff,0 3px 6px #0005;cursor:pointer;margin-top:2px}
 
-.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:7px}
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:7px}
 .cell{
-background:linear-gradient(180deg,#e6ddd0,#c2b7a6);border:2px solid #7a7268;border-radius:14px;
-aspect-ratio:0.9/1;display:flex;flex-direction:column;align-items:center;justify-content:center;
-box-shadow:inset 0 1px 0 #fff,0 3px 8px #000;font-size:28px
+background:linear-gradient(180deg,#d9d0c1,#b9ad9a);border:2px solid #6e665c;border-radius:14px;
+aspect-ratio:0.95/1;display:flex;flex-direction:column;align-items:center;justify-content:center;
+box-shadow:inset 0 1px 0 #fff,0 3px 8px #000;font-size:28px;position:relative;
 }
-.cell b{font-size:14px;margin-top:2px}
+.cell b{font-size:14px;margin-top:3px;color:#1e1e1e}
 
-.magic{color:#fff;margin:12px 0}
-.magic .t{display:flex;justify-content:space-between;font-size:13px;margin-bottom:5px}
-
+.magicRow{color:#fff;margin:14px 0 10px}
+.magicTop{display:flex;justify-content:space-between;font-size:13px;margin-bottom:5px}
 .books{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
-.bk{background:linear-gradient(180deg,#e6ddd0,#c2b7a6);border:2px solid #7a7268;border-radius:16px;padding:10px 6px;text-align:center;box-shadow:inset 0 1px 0 #fff,0 4px 10px #000}
-.bk .ic{font-size:38px}
-.bk .add{font-size:12px;font-weight:900;margin:6px 0;display:flex;gap:2px;justify-content:center;align-items:center}
-.bk .pr{background:linear-gradient(#c2b7a6,#a89c8c);border:1.5px solid #7a7268;border-radius:12px;padding:4px 10px;font-size:12px;font-weight:900;display:inline-flex;gap:4px;align-items:center}
+.bk{background:linear-gradient(180deg,#d9d0c1,#b9ad9a);border:2.5px solid #6e665c;border-radius:18px;padding:10px 6px 8px;text-align:center;box-shadow:inset 0 1px 0 #fff,0 5px 12px #000}
+.bkIcon{font-size:36px;filter:drop-shadow(0 2px 3px #0003)}
+.bkAdd{font-size:12px;font-weight:900;margin:6px 0;display:flex;gap:3px;justify-content:center;align-items:center}
+.bkPrice{background:linear-gradient(180deg,#c2b7a6,#a99d8a);border:1.5px solid #6e665c;border-radius:12px;padding:4px 10px;font-size:11px;font-weight:900;display:inline-flex;gap:4px;align-items:center;box-shadow:inset 0 1px 0 #fff5}
 
+/* modal */
 .modal{position:fixed;inset:0;background:rgba(0,0,0,0.85);z-index:99;display:none;place-items:center;padding:20px}
 .modal.show{display:grid}
-.mBox{background:#e6ddd0;border:3px solid #7a7268;border-radius:18px;padding:20px;width:100%;max-width:300px;text-align:center}
+.mBox{background:#d9d0c1;border:3px solid #6e665c;border-radius:18px;padding:20px;width:100%;max-width:300px;text-align:center}
+.mBox button{width:100%;margin-top:12px;padding:10px;border-radius:12px;border:2px solid #6e665c;background:#b9ad9a;font-weight:900}
 </style>
 </head>
 <body>
 <div class="app">
+<div class="bg"></div>
+<div class="content">
 
-<div class="topRow">
-<div class="stone balBox"><small>My balance</small><div>🔥 <span id="bal">226</span></div></div>
-<div class="rmBox">RM</div>
-<div class="stone profBox">Profile</div>
+<div class="top">
+<div class="stone myBal"><small>My balance</small><div>💎 <span id="bal">226</span></div></div>
+<div class="rm">RM</div>
+<div class="stone prof">Profile</div>
 </div>
 
 <div class="menu">
@@ -96,36 +91,44 @@ box-shadow:inset 0 1px 0 #fff,0 3px 8px #000;font-size:28px
 <div class="stone">Partners</div>
 </div>
 
-<div class="daily"><div class="t"><span>Daily income</span><span>🔥 1 962</span></div><div class="bar"><div class="fill"></div></div></div>
+<div class="dailyRow">
+<div class="dailyTop"><span>Daily income</span><span>💎 1 962</span></div>
+<div class="bar"><div class="fill" style="width:35%"></div></div>
+</div>
 
 <div class="main">
-<div class="big">
-<div class="wiz">🧙‍♂️</div>
-<div class="lvl" id="lvl">37</div>
-<div class="earn">🔥 <span id="earn">0.7500</span></div>
-<div class="collect" onclick="collect()">COLLECT</div>
-</div>
-<div class="grid" id="grid"></div>
+<div class="bigStone">
+<div class="wizBig">🧙‍♂️</div>
+<div class="lvlStone" id="lvl">37</div>
+<div class="earnStone">💎 <span id="earn">0.7500</span></div>
+<button class="collectBtn" onclick="collect()">COLLECT</button>
 </div>
 
-<div class="magic"><div class="t"><span>Magic</span><span>1708 🔮</span></div><div class="bar"><div class="fill" style="width:18%;background:#6a8aff"></div></div></div>
+<div class="grid3" id="grid"></div>
+</div>
+
+<div class="magicRow">
+<div class="magicTop"><span>Magic</span><span>1708 🔮</span></div>
+<div class="bar"><div class="fill" style="width:18%;background:#6e8aff"></div></div>
+</div>
 
 <div class="books">
-<div class="bk"><div class="ic">📙</div><div class="add">+500 🔮</div><div class="pr">🔥 100</div></div>
-<div class="bk"><div class="ic">📘</div><div class="add">+5 000 🔮</div><div class="pr">🔥 1 000</div></div>
-<div class="bk"><div class="ic">📕</div><div class="add">+25 000 🔮</div><div class="pr">🔥 5 000</div></div>
+<div class="bk"><div class="bkIcon">📜</div><div class="bkAdd">+500 🔮</div><div class="bkPrice">💎 100</div></div>
+<div class="bk"><div class="bkIcon">📘</div><div class="bkAdd">+5 000 🔮</div><div class="bkPrice">💎 1 000</div></div>
+<div class="bk"><div class="bkIcon">📕</div><div class="bkAdd">+25 000 🔮</div><div class="bkPrice">💎 5 000</div></div>
 </div>
 
 </div>
+</div>
 
-<div class="modal" id="depM"><div class="mBox"><h3>📥 Deposit</h3><p style="margin:10px 0;font-size:13px">Deposit system পরে বসানো হবে<br>TON Address এখানে আসবে</p><button onclick="closeM()" style="width:100%;padding:10px;border-radius:12px;border:2px solid #7a7268;font-weight:900">OK</button></div></div>
-<div class="modal" id="wdM"><div class="mBox"><h3>📤 Withdraw</h3><p style="margin:10px 0;font-size:13px">Withdraw system পরে বসানো হবে</p><button onclick="closeM()" style="width:100%;padding:10px;border-radius:12px;border:2px solid #7a7268;font-weight:900">OK</button></div></div>
+<div class="modal" id="depM"><div class="mBox"><h3>📥 Deposit</h3><p style="margin:10px 0;font-size:13px">এটা পরে বসানো হবে ভাই।<br>এখানে TON Wallet আসবে।</p><button onclick="closeM()">OK</button></div></div>
+<div class="modal" id="wdM"><div class="mBox"><h3>📤 Withdraw</h3><p style="margin:10px 0;font-size:13px">এটা পরে বসানো হবে ভাই।</p><button onclick="closeM()">OK</button></div></div>
 
 <script>
-let bal=226,earn=0.75;
-let data=[{e:'🧙‍♂️',n:4},{e:'🧙‍♀️',n:3},{e:'🧙‍♂️',n:3},{e:'🧚‍♀️',n:13},{e:'🧝‍♀️',n:8},{e:'🔮',n:3},{e:'🧙‍♂️',n:3},{e:'',n:0},{e:'',n:0},{e:'',n:0},{e:'',n:0},{e:'',n:0}];
-function render(){document.getElementById('grid').innerHTML=data.map(d=>`<div class="cell"><div>${d.e||'⬜'}</div><b>${d.n}</b></div>`).join('');}
-function collect(){bal+=earn;document.getElementById('bal').innerText=Math.floor(bal);earn+=0.01;document.getElementById('earn').innerText=earn.toFixed(4);Telegram.WebApp.HapticFeedback.notificationOccurred('success')}
+let bal=226, earn=0.75;
+let wiz=[{e:'🧙‍♂️',n:4},{e:'🧝‍♀️',n:3},{e:'🧙‍♂️',n:3},{e:'🧚‍♀️',n:13},{e:'🧙‍♀️',n:8},{e:'🧙‍♂️',n:3},{e:'🧙‍♂️',n:3},{e:'',n:0},{e:'',n:0},{e:'',n:0},{e:'',n:0},{e:'',n:0}];
+function render(){document.getElementById('grid').innerHTML=wiz.map(w=>`<div class="cell"><div>${w.e||' '}</div><b>${w.n}</b></div>`).join('')}
+function collect(){bal+=earn;document.getElementById('bal').innerText=Math.floor(bal);earn+=0.005;document.getElementById('earn').innerText=earn.toFixed(4);Telegram.WebApp.HapticFeedback.notificationOccurred('success')}
 function openM(t){document.getElementById(t=='dep'?'depM':'wdM').classList.add('show')}
 function closeM(){document.querySelectorAll('.modal').forEach(m=>m.classList.remove('show'))}
 render();Telegram.WebApp.ready();Telegram.WebApp.expand();
