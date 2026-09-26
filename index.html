@@ -1,69 +1,103 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Flame Wizard - Final</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Flame Wizard Bot</title>
+<script src="https://telegram.org/js/telegram-web-app.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;800&display=swap" rel="stylesheet">
 <style>
-body{margin:0;background:#10101d;color:#fff;font-family:sans-serif}
-.top{display:flex;justify-content:space-between;padding:12px}
-.card{background:linear-gradient(145deg,#2a2a3e,#1a1a2e);border:1px solid #ffcc66;border-radius:12px;padding:10px;text-align:center}
-.btn{background:#ffcc66;color:#000;border:none;padding:8px 15px;border-radius:20px;font-weight:bold;cursor:pointer}
-.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;padding:10px}
-.wiz{background:#232336;border-radius:10px;padding:8px;text-align:center;border:1px solid #444}
-.tabs{display:flex;gap:5px;padding:10px}
-.tabs button{flex:1;background:#333;color:#fff;border:none;padding:10px;border-radius:8px}
-.active{background:#ffcc66!important;color:#000!important}
-.sec{display:none;padding:10px}.show{display:block}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#080c18 url('https://images.unsplash.com/photo-1535905557558-afc4877a26fc?q=80&w=900') center/cover fixed;font-family:'Cinzel',serif;color:#e6dcc3;min-height:100vh}
+body::before{content:'';position:fixed;inset:0;background:rgba(5,10,20,0.82);z-index:-1}
+.app{max-width:480px;margin:0 auto;padding:10px}
+.top-bar{background:linear-gradient(#3a404c,#22262e);border:2px solid #c89b3c;border-radius:6px;padding:8px;display:flex;gap:6px;align-items:center}
+.balance-box{display:flex;gap:6px;background:rgba(0,0,0,0.5);border:1px solid #5a4a20;padding:6px 10px;border-radius:4px}
+.balance-box span{font-size:22px;color:#f5d78e;font-weight:800}
+.mbtns{flex:1;display:flex;gap:5px}
+.mbtn{flex:1;background:#2e323a;border:1px solid #7a6a40;border-radius:6px;padding:6px 2px;text-align:center;font-size:9px;color:#d5c9a8;cursor:pointer}
+.mbtn.active{border-color:#f5d78e;color:#f5d78e;background:#3a2e1a}
+.mbtn i{display:block;font-size:18px;font-style:normal}
+.daily-box{margin:12px 0;width:fit-content;background:#22262e;border:2px solid #4a5a6a;padding:8px 16px;border-radius:4px}
+.daily-box b{color:#d4e88a;font-size:18px}
+.sec-title{background:linear-gradient(90deg,transparent,#2a3442,#2a3442,transparent);border:1px solid #3a4a5a;border-left:4px solid #c89b3c;border-right:4px solid #c89b3c;text-align:center;padding:10px;margin:14px 0 10px;color:#a8d8ff}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.w-card{background:linear-gradient(#2e3440,#1a1e26);border:2px solid #4a5568;border-radius:8px;overflow:hidden;position:relative}
+.w-card.img{height:128px;background:#0e121a}.w-card.img img{width:100%;height:100%;object-fit:cover}
+.w-card.info{padding:7px;text-align:center;background:#1e242f}.name{font-size:11px;font-weight:800}.lvl{font-size:10px;color:#7ec8ff}
+.shop-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.s-card{background:#1a1e26;border:1.5px solid #5a5a6a;border-radius:6px;overflow:hidden;text-align:center}
+.s-card.s-img{height:84px}.s-card.s-img img{width:100%;height:100%;object-fit:cover}
+.s-name{font-size:7.5px;font-weight:800;padding:4px 2px;color:#e8e0c0;height:22px}
+.s-owned{font-size:7px;color:#9ab}.s-inc{font-size:6px;color:#8ec8ff;background:rgba(0,20,40,0.6);margin:2px;padding:2px}
+.hire{margin:4px;background:linear-gradient(#4a3a1a,#2a1e0a);border:1px solid #8a6d2b;border-radius:4px;padding:3px 0;font-size:8px;color:#f5d78e;font-weight:800;cursor:pointer}
+.magic-banner{margin-top:14px;background:#2a2e35;border:2px solid #6b5a2e;border-radius:8px;padding:12px;text-align:center;color:#f5d78e;font-weight:800}
+.modal{position:fixed;inset:0;background:rgba(0,0,0,0.85);z-index:99;display:none;place-items:center;padding:20px}.modal.show{display:grid}
+.mbox{background:#1a1e26;border:2px solid #c89b3c;border-radius:10px;padding:20px;max-width:340px;width:100%;text-align:center}
+.mbox h3{color:#f5d78e;margin-bottom:10px}.mbox p{font-size:13px;color:#c0b090;margin-bottom:14px;line-height:1.5}
+.btn{width:100%;padding:10px;background:#c89b3c;border:none;border-radius:6px;font-weight:800}
 </style>
 </head>
 <body>
-<div class="top">
-<div class="card">🔥 Balance: <b id="bal">226</b></div>
-<div class="card">💰 Daily: +<b id="dinc">0</b>/day</div>
-</div>
-
-<div class="tabs">
-<button id="t1" class="active" onclick="tab('m')">Magician</button>
-<button id="t2" onclick="tab('d')">Deposit</button>
-<button id="t3" onclick="tab('w')">Withdraw</button>
-<button id="t4" onclick="tab('p')">Partners</button>
-</div>
-
-<div id="m" class="sec show">
-<div class="card" style="margin:10px">
-<h3>🧙 Wizard Lv 37</h3>
-<p style="font-size:24px">🔥 <span id="c">0.7500</span></p>
-<button class="btn" onclick="collect()">COLLECT</button>
-<p>Magic: <span id="mg">1708</span> 🔮</p>
-</div>
-<div class="grid" id="g"></div>
-<div class="card" style="margin:10px">
-<h3>Wizard Shop - Daily 20%</h3>
-<div id="shop" style="display:flex;gap:8px;overflow:auto"></div>
+<div class="app">
+<div class="top-bar">
+<div class="balance-box"><div>🔥</div><div><small style="font-size:10px;color:#a99a7a">My Balance</small><br><span id="bal">226</span></div></div>
+<div class="mbtns">
+<div class="mbtn active"><i>🧙‍♂️</i>Magician</div>
+<div class="mbtn" onclick="openModal('dep')"><i>📥</i>Deposit</div>
+<div class="mbtn" onclick="openModal('wd')"><i>📤</i>Withdraw</div>
+<div class="mbtn"><i>👥</i>Partners</div>
 </div>
 </div>
 
-<div id="d" class="sec"><div class="card">Deposit<br><input id="da" placeholder="Amount" style="width:90%;padding:10px;margin:10px;border-radius:8px"><br><button class="btn" onclick="alert('Deposit Address: TON... Copy করুন')">Get Address</button></div></div>
-<div id="w" class="sec"><div class="card">Withdraw<br><input id="wa" placeholder="Min 50 Flame" style="width:90%;padding:10px;margin:10px;border-radius:8px"><input placeholder="Wallet Address" style="width:90%;padding:10px;border-radius:8px"><br><br><button class="btn" onclick="alert('Withdraw Request Sent!')">Withdraw</button></div></div>
-<div id="p" class="sec"><div class="card">Invite Friends & Earn 10%<br><br><input value="https://t.me/flamewizard_bd_bot?start=123" style="width:90%;padding:10px" readonly><br><br><p>Level 1: 10% | Level 2: 5% | Level 3: 2%</p></div></div>
+<div class="daily-box"><small>☀️ Daily Income</small><br><b>+<span id="daily">42</span> / day</b></div>
+
+<div class="sec-title">Wizard Collection</div>
+<div class="grid2" id="col"></div>
+
+<div class="sec-title">WIZARD SHOP • Hire Wizards • Daily +20%</div>
+<div style="background:rgba(0,20,60,0.4);border:1px solid #2a4a6a;padding:6px;text-align:center;font-size:9px;color:#8ec8ff;margin-bottom:8px">Daily Income Bonus: +20% per owned Wizard • Income updates every 24h<br>Resets in: <span id="tm">06:42:19</span></div>
+<div class="shop-grid" id="shop"></div>
+
+<div class="magic-banner">📖 Magic Books Shop</div>
+</div>
+
+<div class="modal" id="depM"><div class="mbox"><h3>📥 Deposit</h3><p>Deposit system পরে বসানো হবে।<br><br>এখানে TON / USDT Address এবং QR Code বসবে।<br>Admin খুব শীঘ্রই Enable করবে।</p><button class="btn" onclick="closeM()">OK</button></div></div>
+<div class="modal" id="wdM"><div class="mbox"><h3>📤 Withdraw</h3><p>Withdraw system পরে বসানো হবে।<br><br>Minimum: 100 Flame<br>Admin খুব শীঘ্রই Enable করবে।</p><button class="btn" onclick="closeM()">OK</button></div></div>
 
 <script>
-let bal=226, cm=0.75, mg=1708, wiz=[
-{c:10,i:2,n:4},{c:25,i:5,n:3},{c:50,i:10,n:3},{c:100,i:20,n:13},{c:250,i:50,n:8},{c:500,i:100,n:3}
+let bal=226;
+let shop=[
+{name:'FLAME WIZARD',own:5,price:120,img:'https://images.unsplash.com/photo-1577493340887-b7bfff550145?q=80&w=300'},
+{name:'FROST MAGE',own:2,price:150,img:'https://images.unsplash.com/photo-1518709268805-4e9042af9f23?q=80&w=300'},
+{name:'ARCANE SCHOLAR',own:8,price:130,img:'https://images.unsplash.com/photo-1535666669445-7495384c8ed8?q=80&w=300'},
+{name:'STORM CALLER',own:3,price:200,img:'https://images.unsplash.com/photo-1518709268805-4e9042af9f23?q=80&w=300'},
+{name:'NATURE DRUID',own:4,price:130,img:'https://images.unsplash.com/photo-1448375240586-882707db888b?q=80&w=300'},
+{name:'SHADOW ADEPT',own:1,price:250,img:'https://images.unsplash.com/photo-1518709268805-4e9042af9f23?q=80&w=300'},
+{name:'PYRO SAGE',own:0,price:120,img:'https://images.unsplash.com/photo-1577493340887-b7bfff550145?q=80&w=300'},
+{name:'ICE ENCHANTER',own:2,price:160,img:'https://images.unsplash.com/photo-1518709268805-4e9042af9f23?q=80&w=300'},
+{name:'LIGHT CLERIC',own:6,price:140,img:'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=300'},
+{name:'DARK WARLOCK',own:1,price:300,img:'https://images.unsplash.com/photo-1518709268805-4e9042af9f23?q=80&w=300'},
+{name:'EARTH GOLEM',own:3,price:170,img:'https://images.unsplash.com/photo-1518709268805-4e9042af9f23?q=80&w=300'},
+{name:'CELESTIAL MAGE',own:0,price:220,img:'https://images.unsplash.com/photo-1531306728370-e2ebd9d7bb99?q=80&w=300'},
+];
+let coll=[
+{name:'Frost Sage',lv:12,st:4,img:'https://images.unsplash.com/photo-1518709268805-4e9042af9f23?q=80&w=400'},
+{name:'Fire Arcanist',lv:9,st:4,img:'https://images.unsplash.com/photo-1577493340887-b7bfff550145?q=80&w=400'},
+{name:'Druid Keeper',lv:7,st:4,img:'https://images.unsplash.com/photo-1448375240586-882707db888b?q=80&w=400'},
+{name:'Shadow Mage',lv:5,st:5,img:'https://images.unsplash.com/photo-1518709268805-4e9042af9f23?q=80&w=400'},
 ];
 function render(){
-document.getElementById('bal').innerText=bal.toFixed(2);
-document.getElementById('c').innerText=cm.toFixed(4);
-document.getElementById('mg').innerText=mg;
-let g=document.getElementById('g'),s=document.getElementById('shop'),di=0;g.innerHTML='';s.innerHTML='';
-wiz.forEach((w,idx)=>{di+=w.n*w.i;g.innerHTML+=`<div class="wiz">🧙<br>${w.n} pcs<br>🔥 +${w.i}<br><button class="btn" style="font-size:11px" onclick="buy(${idx})">Buy 🔥${w.c}</button></div>`;s.innerHTML+=`<div class="wiz">Lv ${idx+1}<br>+${w.i}/day<br><button class="btn" onclick="buy(${idx})">🔥 ${w.c}</button></div>`});
-document.getElementById('dinc').innerText=di;
+document.getElementById('bal').innerText=bal;
+let inc=0;shop.forEach(w=>inc+=w.own*w.price*0.2);document.getElementById('daily').innerText=Math.floor(inc)||42;
+document.getElementById('col').innerHTML=coll.map(c=>`<div class="w-card"><div class="img"><img src="${c.img}"></div><div class="info"><div class="name">${c.name}</div><div class="lvl">Lv.${c.lv}</div><div style="font-size:8px;color:#f5d78e">${'★'.repeat(c.st)}${'☆'.repeat(5-c.st)}</div></div></div>`).join('');
+document.getElementById('shop').innerHTML=shop.map((w,i)=>`<div class="s-card"><div class="s-img"><img src="${w.img}"></div><div class="s-name">${w.name}</div><div class="s-owned">Owned: ${w.own}</div><div class="s-inc">Daily Income: +20%</div><div class="hire" onclick="hire(${i})">🔥 HIRE ${w.price}</div></div>`).join('');
 }
-function buy(i){if(bal>=wiz[i].c){bal-=wiz[i].c;wiz[i].n++;render()}else alert('Balance কম!')}
-function collect(){bal+=cm;cm=0;render()}
-function tab(t){document.querySelectorAll('.sec').forEach(e=>e.classList.remove('show'));document.getElementById(t).classList.add('show');document.querySelectorAll('.tabs button').forEach(b=>b.classList.remove('active'));document.getElementById('t'+(t=='m'?1:t=='d'?2:t=='w'?3:4)).classList.add('active')}
-setInterval(()=>{let di=0;wiz.forEach(w=>di+=w.n*w.i);cm+=di/86400;document.getElementById('c').innerText=cm.toFixed(4)},1000);
-render();
+function hire(i){if(bal<shop[i].price){alert('Balance কম!');return;}bal-=shop[i].price;shop[i].own++;render();if(window.Telegram)Telegram.WebApp.HapticFeedback.notificationOccurred('success');}
+function openModal(t){document.getElementById(t=='dep'?'depM':'wdM').classList.add('show')}
+function closeM(){document.querySelectorAll('.modal').forEach(m=>m.classList.remove('show'))}
+render(); setInterval(()=>{let e=document.getElementById('tm');let p=e.innerText.split(':').map(Number);let s=p[0]*3600+p[1]*60+p[2]-1;if(s<0)s=86400;e.innerText=`${String(Math.floor(s/3600)).padStart(2,'0')}:${String(Math.floor(s%3600/60)).padStart(2,'0')}:${String(s%60).padStart(2,'0')}`},1000);
+Telegram.WebApp.ready();Telegram.WebApp.expand();
 </script>
 </body>
 </html>
