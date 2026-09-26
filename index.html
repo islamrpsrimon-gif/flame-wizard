@@ -1,141 +1,182 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
-<title>Flame Wizard</title>
+<title>FlyMage</title>
 <script src="https://telegram.org/js/telegram-web-app.js"></script>
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@700;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Baloo+2:wght@700;800&display=swap');
 *{margin:0;padding:0;box-sizing:border-box}
-body{background:#070a14;font-family:'Cinzel',serif;color:#e9dcc0}
-.app{max-width:430px;margin:0 auto;background:linear-gradient(180deg,#0d1220,#070a14);min-height:100vh;padding:8px;border:3px solid #2a2e3a;box-shadow:inset 0 0 0 2px #000}
-
-/* TOP BAR - 2nd image */
-.topBar{background:linear-gradient(180deg,#3a3f4f,#232731);border:2px solid #8c6b2a;border-radius:10px;padding:8px;display:flex;gap:6px;align-items:center;box-shadow:0 4px 12px #000, inset 0 1px 0 rgba(255,255,255,0.2)}
-.bal{display:flex;gap:6px;background:#10131a;border:1px solid #5a4a1a;border-radius:8px;padding:6px 10px;align-items:center;min-width:92px}
-.bal span{font-size:22px;color:#ffcc4a;font-weight:900}
-.tBtns{flex:1;display:flex;gap:4px}
-.tBtn{flex:1;background:linear-gradient(#444957,#2a2d37);border:1px solid #8a7a52;border-radius:8px;padding:6px 1px;text-align:center;font-size:8px;color:#d8ccaa;line-height:1.2}
-.tBtn.on{border-color:#ffcc4a;color:#ffcc4a;background:linear-gradient(#5a4520,#2f2410)}
-
-/* Header */
-.header{text-align:center;padding:14px 0 6px;position:relative}
-.header h1{font-size:26px;color:#8ab4ff;text-shadow:0 0 15px #3a6aff,0 0 5px #fff;letter-spacing:2px}
-.header small{color:#6a8ab0;font-size:12px}
-.res{display:flex;gap:8px;position:absolute;right:0;top:16px}
-.res div{background:#1a1f2a;border:1px solid #3a4a2a;border-radius:20px;padding:4px 10px;font-size:11px}
-
-/* Info Bar */
-.infoBar{margin:12px 0;background:linear-gradient(90deg,#122040,#1a2a4a,#122040);border:1px solid #2a4a6a;border-radius:8px;padding:9px 12px;font-size:10px;color:#c8a84a;text-align:center;box-shadow:inset 0 0 10px rgba(50,100,200,0.3)}
-.infoBar span{color:#7ec8ff}
-
-/* Grid 3 - 1st image style */
-.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
-.card{
-background:linear-gradient(180deg,#2e3446 0%,#1a1e2a 60%,#151821 100%);
-border:2px solid #4a4e5e;border-radius:10px;overflow:hidden;
-box-shadow:0 0 0 1px #000, 0 4px 12px rgba(0,0,0,0.8), inset 0 0 0 1px rgba(120,160,255,0.15);
-position:relative;
+body{
+  background:#0a0a0a url('https://images.unsplash.com/photo-1518709268805-4e9042af9f23?q=80&w=800') center/cover no-repeat;
+  background-attachment:fixed; font-family:'Baloo 2',cursive; min-height:100vh;
 }
-.cardTop{height:88px;background:radial-gradient(ellipse at center,#2a3a5a,#151a2a);position:relative;display:grid;place-items:center;font-size:36px;border-bottom:1px solid #2a3a5a}
-.cardTop::after{content:'';position:absolute;inset:0;border:2px solid rgba(100,150,255,0.2);pointer-events:none}
-.avatar{position:absolute;top:-8px;left:50%;transform:translateX(-50%);width:26px;height:26px;background:radial-gradient(circle,#4a3a1a,#1a0f00);border:1.5px solid #c89b3c;border-radius:50%;display:grid;place-items:center;font-size:14px;z-index:3;box-shadow:0 2px 6px #000}
-.cName{font-size:8px;font-weight:900;color:#fff;padding:6px 2px 2px;text-align:center;line-height:1.1;height:20px;display:grid;place-items:center;letter-spacing:0.3px}
-.cOwn{font-size:7.5px;color:#a0a8b8;text-align:center}
-.cInc{font-size:6.5px;color:#8ec8ff;background:rgba(10,30,60,0.7);margin:3px 4px;padding:2px;border-radius:3px;text-align:center;border:1px solid rgba(50,100,150,0.3)}
-.hireBtn{margin:5px 5px 6px;background:linear-gradient(180deg,#3d2e12,#1f1606);border:1.5px solid #8a6d2b;border-radius:6px;padding:5px 0;display:flex;align-items:center;justify-content:space-between;padding-left:6px;padding-right:8px;font-size:9px;font-weight:900;color:#ffcc4a;cursor:pointer;box-shadow:inset 0 1px 0 rgba(255,255,255,0.15),0 2px 4px #000}
-.hireBtn:active{transform:scale(0.96)}
+body::before{content:'';position:fixed;inset:0;background:rgba(0,0,0,0.35);z-index:-1}
+.app{max-width:420px;margin:0 auto;min-height:100vh;background:linear-gradient(180deg,rgba(20,20,30,0.6),rgba(0,0,0,0.8));padding:8px 8px 20px}
 
-/* Bottom */
-.bottomBar{margin-top:12px;background:#1a1e28;border-top:2px solid #2a2e38;padding:8px;display:flex;gap:8px}
-.bBtn{flex:1;background:linear-gradient(#2a2e3a,#1a1e28);border:1.5px solid #4a4e5e;border-radius:8px;padding:10px 0;text-align:center;font-size:11px;color:#8a8a8a;font-weight:700}
-.bBtn.on{background:linear-gradient(#1a2a4a,#122040);border-color:#3a6aff;color:#ffcc4a;box-shadow:0 0 10px rgba(58,106,255,0.4)}
+/* Stone Button Style */
+.stone{
+  background:linear-gradient(180deg,#d8d2c4 0%,#b8b2a2 50%,#a8a29a 100%);
+  border:2px solid #5a544a; border-radius:12px;
+  box-shadow:inset 0 2px 0 #fff8, inset 0 -2px 0 #0004, 0 3px 8px #0008, 0 0 0 2px #2a2a2a;
+  position:relative; color:#1a1a1a; font-weight:800;
+}
+.stone::before{
+  content:'';position:absolute;inset:0;border-radius:10px;
+  background:repeating-linear-gradient(90deg,transparent 0 2px,rgba(0,0,0,0.03) 2px 4px);
+  pointer-events:none;
+}
 
-/* modal */
-.modal{position:fixed;inset:0;background:rgba(0,0,0,0.88);z-index:50;display:none;place-items:center;padding:20px}
+/* Top */
+.topRow{display:flex;gap:8px;align-items:center;margin-bottom:10px}
+.balStone{flex:1.2;display:flex;align-items:center;justify-content:center;gap:6px;padding:8px 10px;font-size:13px}
+.balStone b{font-size:22px}
+.rmBtn{width:58px;height:58px;border-radius:50%;background:#2ec4b6;border:3px solid #fff;display:grid;place-items:center;color:#fff;font-size:22px;font-weight:900;box-shadow:0 4px 10px #000}
+.profBtn{flex:0.8;padding:10px;text-align:center;font-size:14px}
+
+.menuRow{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin-bottom:14px}
+.mBtn{padding:10px 2px;text-align:center;font-size:12px;border-radius:10px}
+
+.dailyWrap{color:#fff;margin-bottom:12px}
+.dailyTop{display:flex;justify-content:space-between;font-size:14px;margin-bottom:4px}
+.dailyBar{height:6px;background:rgba(255,255,255,0.3);border-radius:3px;overflow:hidden}
+.dailyFill{height:100%;width:35%;background:linear-gradient(90deg,#fff,#ccc)}
+
+/* Main Area */
+.mainArea{display:grid;grid-template-columns:1.1fr 1.5fr;gap:10px;margin-bottom:14px}
+
+.bigCard{
+  background:linear-gradient(180deg,#e8e0d0,#c8c0b0); border:3px solid #6a645a;
+  border-radius:18px; padding:10px; box-shadow:inset 0 2px 0 #fff,0 6px 15px #000,0 0 0 2px #000;
+  display:flex;flex-direction:column;align-items:center; position:relative;
+}
+.bigCard::before{
+  content:'';position:absolute;inset:0;border-radius:16px;
+  background:radial-gradient(ellipse at 30% 20%,rgba(255,255,255,0.3),transparent 60%);
+}
+.wizImg{font-size:85px;filter:drop-shadow(0 5px 8px #0005);margin:5px 0}
+.lvlBox{background:linear-gradient(#d0c8b8,#a8a098);border:2px solid #6a645a;border-radius:12px;padding:4px 22px;font-size:22px;font-weight:900;box-shadow:0 2px 5px #0005;margin:4px 0}
+.earnRow{display:flex;align-items:center;gap:4px;font-size:18px;font-weight:900;margin:6px 0}
+.collectBtn{
+  margin-top:8px;width:100%;padding:12px;background:linear-gradient(#d8c8d0,#b8a8b0);
+  border:2px solid #8a7a80;border-radius:20px;font-weight:900;font-size:16px;letter-spacing:1px;
+  box-shadow:inset 0 1px 0 #fff,0 3px 6px #0005
+}
+
+.smallGrid{display:grid;grid-template-columns:repeat(3,1fr);gap:7px}
+.sBox{
+  background:linear-gradient(180deg,#e8e0d0,#c8c0b0); border:2px solid #6a645a;
+  border-radius:12px; aspect-ratio:1/1; display:flex;flex-direction:column;
+  align-items:center;justify-content:center; box-shadow:inset 0 1px 0 #fff,0 3px 8px #000,0 0 0 1px #000;
+  font-size:26px; position:relative;
+}
+.sBox b{font-size:15px;margin-top:2px;color:#000}
+
+/* Magic Bar */
+.magicWrap{color:#fff;margin:10px 0}
+.magicTop{display:flex;justify-content:space-between;font-size:14px;margin-bottom:4px}
+.magicBar{height:6px;background:rgba(255,255,255,0.3);border-radius:3px;overflow:hidden}
+.magicFill{height:100%;width:18%;background:#5a7aff}
+
+/* Books */
+.bookRow{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.bookCard{
+  background:linear-gradient(180deg,#e8e0d0,#c8c0b0); border:2.5px solid #6a645a;
+  border-radius:16px; padding:8px 6px; text-align:center;
+  box-shadow:inset 0 1px 0 #fff,0 4px 10px #000,0 0 0 1px #000;
+}
+.bookIcon{font-size:40px;filter:drop-shadow(0 3px 4px #0004)}
+.bookAdd{font-size:13px;font-weight:800;display:flex;align-items:center;justify-content:center;gap:3px;margin:4px 0}
+.bookPrice{background:linear-gradient(#c8c0b0,#a8a098);border:1.5px solid #6a645a;border-radius:12px;padding:3px 8px;font-size:12px;font-weight:800;display:inline-flex;align-items:center;gap:3px}
+
+.modal{position:fixed;inset:0;background:rgba(0,0,0,0.85);z-index:99;display:none;place-items:center;padding:20px}
 .modal.show{display:grid}
-.mBox{background:linear-gradient(#2a3446,#1a1e2a);border:2px solid #c89b3c;border-radius:12px;padding:20px;width:100%;max-width:320px;text-align:center}
-.mBox h3{color:#ffcc4a;margin-bottom:10px}.mBox p{font-size:12px;color:#c0b090;line-height:1.6;margin-bottom:14px}
-.mBox button{width:100%;padding:10px;background:linear-gradient(#c89b3c,#8a6d2b);border:none;border-radius:8px;font-weight:900}
+.mBox{background:#e8e0d0;border:3px solid #6a645a;border-radius:16px;padding:20px;width:100%;max-width:300px;text-align:center}
 </style>
 </head>
 <body>
 <div class="app">
 
-<div class="topBar">
-<div class="bal"><div style="font-size:20px">🪙</div><div><div style="font-size:9px;color:#a99a7a">My Balance</div><span id="bal">226</span></div></div>
-<div class="tBtns">
-<div class="tBtn on">🎩<br>Magician</div>
-<div class="tBtn" onclick="openM('dep')">📥<br>Deposit</div>
-<div class="tBtn" onclick="openM('wd')">📤<br>Withdraw</div>
-<div class="tBtn">👥<br>Partners</div>
+<div class="topRow">
+<div class="stone balStone"><span style="font-size:12px;font-weight:600">My balance</span> 🔥 <b id="bal">226</b></div>
+<div class="rmBtn">RM</div>
+<div class="stone profBtn">Profile</div>
+</div>
+
+<div class="menuRow">
+<div class="stone mBtn">Magician</div>
+<div class="stone mBtn" onclick="openM('dep')">Deposit</div>
+<div class="stone mBtn" onclick="openM('wd')">Withdraw</div>
+<div class="stone mBtn">Partners</div>
+</div>
+
+<div class="dailyWrap">
+<div class="dailyTop"><span>Daily income</span><span>🔥 <b id="daily">1 962</b></span></div>
+<div class="dailyBar"><div class="dailyFill"></div></div>
+</div>
+
+<div class="mainArea">
+<div class="bigCard">
+<div class="wizImg">🧙‍♂️</div>
+<div class="lvlBox" id="lvl">37</div>
+<div class="earnRow">🔥 <span id="earn">0.7500</span></div>
+<div class="collectBtn" onclick="collect()">COLLECT</div>
+</div>
+
+<div class="smallGrid" id="grid"></div>
+</div>
+
+<div class="magicWrap">
+<div class="magicTop"><span>Magic</span><span>1708 🔮</span></div>
+<div class="magicBar"><div class="magicFill"></div></div>
+</div>
+
+<div class="bookRow">
+<div class="bookCard">
+<div class="bookIcon">📔</div>
+<div class="bookAdd">+500 🔮</div>
+<div class="bookPrice">🔥 100</div>
+</div>
+<div class="bookCard">
+<div class="bookIcon">📘</div>
+<div class="bookAdd">+5 000 🔮</div>
+<div class="bookPrice">🔥 1 000</div>
+</div>
+<div class="bookCard">
+<div class="bookIcon">📕</div>
+<div class="bookAdd">+25 000 🔮</div>
+<div class="bookPrice">🔥 5 000</div>
 </div>
 </div>
 
-<div class="header">
-<h1>WIZARD SHOP</h1>
-<small>Hire Wizards • Daily Income +20%</small>
-<div class="res"><div>🔥 1.2k</div><div>🪙 8.5k</div></div>
 </div>
 
-<div class="infoBar">⏱ Daily Income Bonus: +20% per owned Wizard • Income updates every 24h<br><span>Resets in: <b id="timer">06:42:19</b></span></div>
-
-<div class="grid" id="shop"></div>
-
-<div class="bottomBar">
-<div class="bBtn on">🧙 WIZARDS</div>
-<div class="bBtn">🎒 ITEMS</div>
-<div class="bBtn">✨ SUMMON</div>
-</div>
-</div>
-
-<div class="modal" id="depM"><div class="mBox"><h3>📥 Deposit</h3><p>এই সিস্টেম পরে বসানো হবে।<br><br>এখানে TON Wallet Address + QR Code বসবে।<br>তুমি যখন বলবে তখন আমি বসিয়ে দেব।</p><button onclick="closeM()">OK</button></div></div>
-<div class="modal" id="wdM"><div class="mBox"><h3>📤 Withdraw</h3><p>এই সিস্টেম পরে বসানো হবে।<br><br>এখানে Withdraw Form + Minimum Amount বসবে।</p><button onclick="closeM()">OK</button></div></div>
+<div class="modal" id="depM"><div class="mBox"><h3>📥 Deposit</h3><p style="font-size:13px;margin:10px 0">Deposit system পরে বসানো হবে।<br>এখানে TON Address বসবে।</p><button onclick="closeM()" style="width:100%;padding:10px;border-radius:10px;border:none;background:#6a645a;color:#fff;font-weight:800">OK</button></div></div>
+<div class="modal" id="wdM"><div class="mBox"><h3>📤 Withdraw</h3><p style="font-size:13px;margin:10px 0">Withdraw system পরে বসানো হবে।</p><button onclick="closeM()" style="width:100%;padding:10px;border-radius:10px;border:none;background:#6a645a;color:#fff;font-weight:800">OK</button></div></div>
 
 <script>
-let bal=226;
-let wizards=[
-{name:'FLAME WIZARD',own:5,price:120,emoji:'🧙‍♂️🔥',color:'#4a1a0a'},
-{name:'FROST MAGE',own:2,price:150,emoji:'🧙‍♂️❄️',color:'#0a2a4a'},
-{name:'ARCANE SCHOLAR',own:8,price:130,emoji:'📖✨',color:'#2a0a4a'},
-{name:'STORM CALLER',own:3,price:200,emoji:'⛈️🧙‍♂️',color:'#1a2a4a'},
-{name:'NATURE DRUID',own:4,price:130,emoji:'🌿🧙‍♂️',color:'#0a3a1a'},
-{name:'SHADOW ADEPT',own:1,price:250,emoji:'🌑🧙‍♂️',color:'#1a1a2a'},
-{name:'PYRO SAGE',own:0,price:120,emoji:'🔥🧔',color:'#5a1a0a'},
-{name:'ICE ENCHANTER',own:2,price:160,emoji:'❄️🧊',color:'#0a3a5a'},
-{name:'LIGHT CLERIC',own:6,price:140,emoji:'✨⛪',color:'#4a4a3a'},
-{name:'DARK WARLOCK',own:1,price:300,emoji:'💀🧙‍♂️',color:'#0a0a0a'},
-{name:'EARTH GOLEM',own:3,price:170,emoji:'🪨🤖',color:'#3a2a0a'},
-{name:'CELESTIAL MAGE',own:0,price:220,emoji:'🌙✨',color:'#1a1a4a'},
+let balance=226;
+let earn=0.75;
+let wiz=[
+{emoji:'🧙‍♂️',c:4},{emoji:'🧝‍♀️',c:3},{emoji:'🧙‍♂️',c:3},
+{emoji:'🧚‍♀️',c:13},{emoji:'🧙‍♀️',c:8},{emoji:'🔮',c:3},
+{emoji:'🧙‍♂️',c:3},{emoji:'⬜',c:0},{emoji:'⬜',c:0},
+{emoji:'⬜',c:0},{emoji:'⬜',c:0},{emoji:'⬜',c:0},
 ];
 function render(){
-document.getElementById('bal').innerText=bal;
-document.getElementById('shop').innerHTML=wizards.map((w,i)=>`
-<div class="card">
-<div class="cardTop" style="background:radial-gradient(ellipse at center,${w.color},#0a0e18)"><div class="avatar">${w.emoji[0]}</div><div style="font-size:28px">${w.emoji}</div></div>
-<div class="cName">${w.name}</div>
-<div class="cOwn">Owned: ${w.own}</div>
-<div class="cInc">Daily Income: +20% ↗</div>
-<div class="hireBtn" onclick="hire(${i})"><span>🔥 HIRE</span><span>${w.price}</span></div>
-</div>`).join('');
+document.getElementById('bal').innerText=balance;
+document.getElementById('grid').innerHTML=wiz.map(w=>`<div class="sBox"><div>${w.emoji}</div><b>${w.c}</b></div>`).join('');
 }
-function hire(i){
-if(bal<wizards[i].price){alert('Balance কম! Deposit করো');return;}
-bal-=wizards[i].price; wizards[i].own++;
-render();
-try{Telegram.WebApp.HapticFeedback.notificationOccurred('success')}catch(e){}
+function collect(){
+balance+=earn; earn+=0.01;
+document.getElementById('earn').innerText=earn.toFixed(4);
+document.getElementById('bal').innerText=Math.floor(balance);
+Telegram.WebApp.HapticFeedback.notificationOccurred('success');
 }
 function openM(t){document.getElementById(t=='dep'?'depM':'wdM').classList.add('show')}
 function closeM(){document.querySelectorAll('.modal').forEach(m=>m.classList.remove('show'))}
 render();
-setInterval(()=>{
-let e=document.getElementById('timer');
-let p=e.innerText.split(':').map(Number);
-let s=p[0]*3600+p[1]*60+p[2]-1;
-if(s<0)s=86400;
-e.innerText=`${String(Math.floor(s/3600)).padStart(2,'0')}:${String(Math.floor(s%3600/60)).padStart(2,'0')}:${String(s%60).padStart(2,'0')}`;
-},1000);
 Telegram.WebApp.ready();Telegram.WebApp.expand();
 </script>
 </body>
